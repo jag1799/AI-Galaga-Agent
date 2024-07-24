@@ -12,7 +12,6 @@ class Bullet(Sprite):
 
        self.grid_size = ai_settings.grid_size
        
-
        # Create bullet rect at (0, 0), then set correct position.
        self.rect = pygame.Rect(
            0, 0, ai_settings.bullet_width, ai_settings.bullet_height

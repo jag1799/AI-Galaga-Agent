@@ -5,6 +5,7 @@ import pygame
 
 from bullet import Bullet
 from alien import Alien
+from alien_bullet import Alien_Bullet
 
 
 def check_keydown_events(event, ai_settings, screen, ship, bullets):
@@ -93,8 +94,13 @@ def fire_bullet(ai_settings, screen, ship, bullets):
         new_bullet = Bullet(ai_settings, screen, ship)
         bullets.add(new_bullet)
 
+def fire_alien_bullets(ai_settings, screen, aliens, alien_bullets):
+    """Fire a bullet from a random alien, if limit not yet reached."""
+    if len(alien_bullets) < ai_settings.bullets_allowed:
+        new_alien_bullet = Alien_Bullet(ai_settings, screen, aliens)
+        alien_bullets.add(new_alien_bullet)
 
-def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets, play_button):
+def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets, play_button, alien_bullets):
     """Update images on the screen, and flip to the new screen."""
     # Redraw the screen, each pass through the loop.
     screen.fill(ai_settings.bg_color)
@@ -102,6 +108,10 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets, play_bu
     # Redraw all bullets, behind ship and aliens.
     for bullet in bullets.sprites():
         bullet.draw_bullet()
+    
+    for alien_bullet in alien_bullets.sprites():
+        alien_bullet.draw_alien_bullet()
+
     ship.blitme()
     aliens.draw(screen)
 
@@ -116,13 +126,13 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets, play_bu
     pygame.display.flip()
 
 
-def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets):
+def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets):
     """Update position of bullets, and get rid of old bullets."""
     # Update ship bullet positions.
     bullets.update()
 
     # Update Alien bullet positions.
-    
+    alien_bullets.update()
 
     # Get rid of ship bullets that have disappeared.
     for bullet in bullets.copy():
@@ -130,6 +140,10 @@ def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets):
             bullets.remove(bullet)
     
     # Get rid of Alien bullets that have gone offscreen
+    for alien_bullet in alien_bullets.copy():
+        if alien_bullet.rect.top >= 1000:
+            alien_bullets.remove(alien_bullet)
+    
 
     check_ship_bullet_alien_collisions(ai_settings, screen, stats, sb, ship, aliens, bullets)
 

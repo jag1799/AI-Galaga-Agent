@@ -8,7 +8,6 @@ from button import Button
 from ship import Ship
 import game_functions as gf
 
-
 def run_game():
     # Initialize pygame, settings, and screen object.
     pygame.init()
@@ -52,14 +51,15 @@ def run_game():
 
         if stats.game_active:
             ship.update()
-            gf.update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets)
+            gf.fire_alien_bullets(ai_settings, screen, aliens, alien_bullets)
+            gf.update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets)
             if time_since_last_update >= 1000:  # 1000 milliseconds = 1 second
                for alien in aliens:
                    gf.update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets)
                last_update_time = current_time  # Reset the timer
 
         gf.update_screen(
-            ai_settings, screen, stats, sb, ship, aliens, bullets, play_button
+            ai_settings, screen, stats, sb, ship, aliens, bullets, play_button, alien_bullets
         )
 
 run_game()
