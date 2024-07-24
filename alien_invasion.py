@@ -33,6 +33,7 @@ def run_game():
     ship = Ship(ai_settings, screen)
     bullets = Group()
     aliens = Group()
+    alien_bullets = Group() # Maximum number of alien bullets allowed.
     
     # Timing setup
     last_update_time = pygame.time.get_ticks()
@@ -43,7 +44,7 @@ def run_game():
     # Start the main loop for the game.
     while True:
         gf.check_events(
-            ai_settings, screen, stats, sb, play_button, ship, aliens, bullets
+            ai_settings, screen, stats, sb, play_button, ship, aliens, bullets, alien_bullets
         )
 
         current_time = pygame.time.get_ticks()

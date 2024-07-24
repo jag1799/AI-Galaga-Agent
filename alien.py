@@ -71,7 +71,7 @@ class Alien(Sprite):
         
         # # Pause the game and wait for Enter
         # input("Press Enter to continue...")
-        print(self.rect)
+        # print(self.rect)
 
     # def update(self):
     #     """Move the alien right or left."""
