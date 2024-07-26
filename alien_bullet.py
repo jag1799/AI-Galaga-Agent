@@ -24,7 +24,7 @@ class Alien_Bullet(Sprite):
         self.y = float(self.rect.y)
 
         # Settings for the bullet
-        self.color = ai_settings.bullet_color
+        self.color = ai_settings.alien_bullet_color
         self.speed_factor = ai_settings.bullet_speed_factor
 
         # Track the last update time

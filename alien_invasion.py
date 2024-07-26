@@ -32,7 +32,7 @@ def run_game():
     ship = Ship(ai_settings, screen)
     bullets = Group()
     aliens = Group()
-    alien_bullets = Group() # Maximum number of alien bullets allowed.
+    alien_bullets = Group()
     
     # Timing setup
     last_update_time = pygame.time.get_ticks()
@@ -55,7 +55,7 @@ def run_game():
             gf.update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets)
             if time_since_last_update >= 1000:  # 1000 milliseconds = 1 second
                for alien in aliens:
-                   gf.update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets)
+                   gf.update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets)
                last_update_time = current_time  # Reset the timer
 
         gf.update_screen(

@@ -18,7 +18,9 @@ class Settings:
         # Bullet settings.
         self.bullet_width = 3
         self.bullet_height = 15
-        self.bullet_color = 60, 60, 60
+        self.bullet_color = 200, 60, 60
+        # Alien bullet color.
+        self.alien_bullet_color = 160, 220, 150
         self.bullets_allowed = 3
         
         self.direction_change_interval = 1000  # Interval in milliseconds
