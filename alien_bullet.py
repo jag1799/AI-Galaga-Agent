@@ -3,8 +3,10 @@ from pygame.sprite import Group, Sprite
 import random
 
 class Alien_Bullet(Sprite):
-
+    """Bullet that an alien fires at random.  Maximum 3 bullets at a time."""
+    
     def __init__(self, ai_settings, screen, aliens : Group) -> None:
+        """Create a bullet at a random alien and fire it down the screen."""
         super(Alien_Bullet, self).__init__()
         self.screen = screen
 
@@ -16,9 +18,11 @@ class Alien_Bullet(Sprite):
         # Get a random number within the remaining aliens
         alien_idx = random.randint(0, (len(aliens_list)-1))
         
-        # Get the position of the randomly selected alien
+        # Set initial hitboxes for the bullet
         self.rect.centerx = aliens_list[alien_idx].rect.centerx
-        self.rect.top = aliens_list[alien_idx].rect.top
+
+        # This is different from the ship's bullet class since we're shooting downwards.
+        self.rect.bottom = aliens_list[alien_idx].rect.bottom
 
         # Store a decimal value for the bullet's position
         self.y = float(self.rect.y)
