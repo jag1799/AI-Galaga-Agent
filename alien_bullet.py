@@ -1,3 +1,9 @@
+"""
+Created Tues Jul 23 8:45:00
+
+@author JGERMANN
+"""
+
 import pygame
 from pygame.sprite import Group, Sprite
 import random
@@ -33,13 +39,16 @@ class Alien_Bullet(Sprite):
 
         # Track the last update time
         self.last_update_time = pygame.time.get_ticks()
-    
+        
+        # time interval to keep bullets on same interval with other updates
+        self.update_int = ai_settings.update_time_ms
+        
     def update(self):
         """Move the Alien's bullet down the screen towards the ship"""
         current_time = pygame.time.get_ticks()
         time_since_update = current_time - self.last_update_time
 
-        if time_since_update >= 1000:
+        if time_since_update >= self.update_int:
             # Update the decimal position of the alien's bullet.
             self.y += self.grid_size
             

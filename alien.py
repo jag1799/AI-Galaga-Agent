@@ -40,11 +40,32 @@ class Alien(Sprite):
         elif self.rect.left <= 0:
             return True
 
-    
+
+    # def update(self):
+    #     """Move the alien right or left."""
+    #     self.x += 3 * self.ai_settings.fleet_direction
+    #     self.rect.x = self.x  
+
     def update(self):
         """Move the alien right or left."""
-        self.x += 3 * self.ai_settings.fleet_direction
-        self.rect.x = self.x        
+        
+        self.x += self.ai_settings.grid_size * self.ai_settings.fleet_direction
+        self.rect.x = self.x  
+        self.ai_settings.updated_this_iteration =True
+        # self.x += self.ai_settings.grid_size/(self.ai_settings.num_alien_x * self.ai_settings.num_alien_y) * self.ai_settings.fleet_direction
+        # self.rect.x = self.x  
+       
+        # self.x += self.ai_settings.grid_size/(self.ai_settings.num_alien_x * self.ai_settings.num_alien_y) * self.ai_settings.fleet_direction
+             
+        
+        # self.ai_settings.count=self.ai_settings.count+1
+        # print(f'self.x = {self.x}')
+        # print(f'self.rect.x = {self.rect.x}')
+        
+        # print(f'self.ai_settings.fleet_direction = {self.ai_settings.fleet_direction}')
+        
+        # print(f'self.ai_settings.grid_size = {self.ai_settings.grid_size}')
+        # print(f'self.ai_settings.count={self.ai_settings.count}')
 
     def blitme(self):
         """Draw the alien at its current location."""

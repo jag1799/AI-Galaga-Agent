@@ -19,7 +19,7 @@ class Ship(Sprite):
         self.rect.bottom = self.screen_rect.bottom
 
         # Store a decimal value for the ship's center.
-        self.center = float(self.rect.centerx)
+        self.center = float(self.rect.centerx)        #############
 
         # Movement flags.
         self.moving_right = False
@@ -30,24 +30,25 @@ class Ship(Sprite):
         self.move_counter = 0
         self.move_delay = 10  # Adjust this to control movement frequency
 
+
     def center_ship(self):
         """Center the ship on the screen."""
-        self.center = self.screen_rect.centerx
+        self.center = self.screen_rect.centerx+self.ai_settings.grid_size/2 
 
     def update(self):
         """Update the ship's position, based on movement flags."""
         self.move_counter+=1
         if self.move_counter >= self.move_delay:
             # Update the ship's center value, not the rect.
-            if self.moving_right and self.rect.right < self.screen_rect.right:
+            if self.moving_right and self.rect.right <= self.screen_rect.right-self.ai_settings.grid_size/2:     ################
                 self.center += self.ai_settings.grid_size 
                 # Prevents continuous movement, requires key release
                 self.moving_right = False
-            if self.moving_left and self.rect.left > 0:
+            if self.moving_left and self.rect.left >= 0+self.ai_settings.grid_size/2:        ##################
                 self.center -= self.ai_settings.grid_size
                 # Prevents continuous movement, requires key release
                 self.moving_left=False
-
+                
         # Update rect object from self.center.
         self.rect.centerx = self.center
 

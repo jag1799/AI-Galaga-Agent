@@ -27,19 +27,22 @@ class Bullet(Sprite):
 
        # Track the last update time
        self.last_update_time = pygame.time.get_ticks()
+       
+       # time interval to keep bullets on same interval with other updates
+       self.update_int = ai_settings.update_time_ms
 
     def update(self):
         """Move the bullet up the screen."""
         current_time = pygame.time.get_ticks()
         time_since_update = current_time - self.last_update_time
         
-        if time_since_update >= 1000:
+        if time_since_update >= self.update_int:
             # Update the decimal position of the bullet.
             self.y -= self.grid_size
             # Update the rect position.
             self.rect.y = round(self.y)
             self.last_update_time = current_time
-        
+        # print(f'self.rect.y ={self.rect.y }')
 
     def draw_bullet(self):
         """Draw the bullet to the screen."""
