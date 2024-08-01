@@ -3,8 +3,9 @@ from pygame.sprite import Sprite
 
 
 class Ship(Sprite):
+
+    """Initialize the ship, and set its starting position."""
     def __init__(self, ai_settings, screen):
-        """Initialize the ship, and set its starting position."""
         super(Ship, self).__init__()
         self.screen = screen
         self.ai_settings = ai_settings
@@ -30,13 +31,13 @@ class Ship(Sprite):
         self.move_counter = 0
         self.move_delay = 10  # Adjust this to control movement frequency
 
-
+    """Center the ship on the screen."""
     def center_ship(self):
-        """Center the ship on the screen."""
         self.center = self.screen_rect.centerx+self.ai_settings.grid_size/2 
 
+
+    """Update the ship's position, based on movement flags."""
     def update(self):
-        """Update the ship's position, based on movement flags."""
         self.move_counter+=1
         if self.move_counter >= self.move_delay:
             # Update the ship's center value, not the rect.
@@ -52,6 +53,7 @@ class Ship(Sprite):
         # Update rect object from self.center.
         self.rect.centerx = self.center
 
+
+    """Draw the ship at its current location."""
     def blitme(self):
-        """Draw the ship at its current location."""
         self.screen.blit(self.image, self.rect)

@@ -3,8 +3,8 @@ import pygame
 
 class Settings:
 
+    """Initialize the game's static settings."""
     def __init__(self):
-        """Initialize the game's static settings."""
         # Screen settings.
         self.screen_width = 1000
         self.screen_height = 1000
@@ -38,8 +38,8 @@ class Settings:
         # How quickly the alien point values increase.
         self.score_scale = 1.5
         
-        # Sets speed of frame updates/ gameplay speed
-        self.update_time_ms = 5000
+        # Sets speed of frame updates / gameplay speed
+        self.update_time_ms = 100
         
         # Flag for if the update occured during the current iteration
         self.updated_this_iteration =False
@@ -51,8 +51,8 @@ class Settings:
         
         self.initialize_dynamic_settings()
 
+    """Initialize settings that change throughout the game."""
     def initialize_dynamic_settings(self):
-        """Initialize settings that change throughout the game."""
         self.ship_speed_factor = 1
         self.alien_speed_factor = 0.5
         self.fleet_drop_speed = 25
@@ -64,8 +64,8 @@ class Settings:
         # fleet_direction of 1 represents right, -1 represents left.
         self.fleet_direction = 1
 
+    """Increase speed settings and alien point values."""
     def increase_speed(self):
-        """Increase speed settings and alien point values."""
         self.ship_speed_factor *= self.speedup_scale
         self.bullet_speed_factor *= self.speedup_scale
         self.alien_speed_factor *= self.speedup_scale

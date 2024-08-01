@@ -8,11 +8,14 @@ import pygame
 from pygame.sprite import Group, Sprite
 import random
 
+
+"""
+Bullet that an alien fires at random.  Maximum 3 bullets at a time.
+"""
 class Alien_Bullet(Sprite):
-    """Bullet that an alien fires at random.  Maximum 3 bullets at a time."""
     
+    """Create a bullet at a random alien and fire it down the screen."""
     def __init__(self, ai_settings, screen, aliens : Group) -> None:
-        """Create a bullet at a random alien and fire it down the screen."""
         super(Alien_Bullet, self).__init__()
         self.screen = screen
 
@@ -42,9 +45,9 @@ class Alien_Bullet(Sprite):
         
         # time interval to keep bullets on same interval with other updates
         self.update_int = ai_settings.update_time_ms
-        
+    
+    """Move the Alien's bullet down the screen towards the ship"""
     def update(self):
-        """Move the Alien's bullet down the screen towards the ship"""
         current_time = pygame.time.get_ticks()
         time_since_update = current_time - self.last_update_time
 
@@ -56,6 +59,6 @@ class Alien_Bullet(Sprite):
             self.rect.y = round(self.y)
             self.last_update_time = current_time
 
+    """Draw the Alien bullet to the screen."""
     def draw_alien_bullet(self):
-        """Draw the Alien bullet to the screen."""
         pygame.draw.rect(self.screen, self.color, self.rect)

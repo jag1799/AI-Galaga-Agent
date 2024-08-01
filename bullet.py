@@ -1,12 +1,11 @@
 import pygame
 from pygame.sprite import Sprite
 
-
+"""A class to manage bullets fired from the ship."""
 class Bullet(Sprite):
-    """A class to manage bullets fired from the ship."""
 
+    """Create a bullet object, at the ship's current position."""
     def __init__(self, ai_settings, screen, ship):
-       """Create a bullet object, at the ship's current position."""
        super(Bullet, self).__init__()
        self.screen = screen
 
@@ -31,8 +30,9 @@ class Bullet(Sprite):
        # time interval to keep bullets on same interval with other updates
        self.update_int = ai_settings.update_time_ms
 
+
+    """Move the bullet up the screen."""
     def update(self):
-        """Move the bullet up the screen."""
         current_time = pygame.time.get_ticks()
         time_since_update = current_time - self.last_update_time
         
@@ -44,6 +44,6 @@ class Bullet(Sprite):
             self.last_update_time = current_time
         # print(f'self.rect.y ={self.rect.y }')
 
+    """Draw the bullet to the screen."""
     def draw_bullet(self):
-        """Draw the bullet to the screen."""
         pygame.draw.rect(self.screen, self.color, self.rect)

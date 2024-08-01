@@ -14,7 +14,8 @@ class Game():
 
     def __init__(self):
         pass
-
+    
+    """Initialize game variables and the main loop."""
     def run_game(self):
         # Initialize pygame, settings, and screen object.
         pygame.init()
@@ -47,26 +48,26 @@ class Game():
         # Create the fleet of aliens.
         gf.create_fleet(ai_settings, screen, ship, aliens)
 
-
-
         count = 0
 
-        ## initialize the total number of states for the Q-table
+        # Initialize the total number of states for the Q-table
         num_states = 10*1024*9*9*10 # the 1024 is really 385, but it was simpler to use 1024
         num_actions = 4
         q_table = aag.initialize_q_table(num_states, num_actions)
         
-        #initialize Q-learning parameters 
+        # Initialize Q-learning parameters 
         alpha = 0.1
         gamma = 0.99
-        #epsilon = 0.1 # exploration rate if greedy function is used.
+        # epsilon = 0.1 # exploration rate if greedy function is used.
         
-        num_epochs = 0 # Number of training instances completed
-        # reward initialization 
-        initial_lives = ai_settings.ship_limit
-        initial_aliens =8
-        # Start the main loop for the game.
+        # Number of training instances completed
+        num_epochs = 0 
 
+        # Reward initialization 
+        initial_lives = ai_settings.ship_limit
+        initial_aliens = 8
+
+        # Start the main loop for the game.
         while initial_lives > 0:
             
             # Reset the environment
@@ -79,17 +80,23 @@ class Game():
             
             # Track game stats
             if stats.game_active:
+
                 ship.update()
                 gf.fire_alien_bullets(ai_settings, screen, aliens, alien_bullets)
                 gf.update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets)
+
                 if time_since_last_update >= ai_settings.update_time_ms:  # 1000 milliseconds = 1 second
+                    
                     ## Implementing AI Agent 
                     bullet_detected : float = 0
-                    #get the current state
+
+                    # Det the current state
                     state = aag.get_state(ship,aliens,alien_bullets)
+
+                    # Check if a bullet was detected in any of the the detection squares
                     bullet_detected = state[len(state)-1]
                 
-                    # determine next best action
+                    # Determine next best action
                     action = aag.choose_action(state,q_table,num_states)
                 
                     # perform the action
@@ -97,36 +104,27 @@ class Game():
                 
                 
                 
-                
-                
-                
-                
                     ai_settings.updated_this_iteration =False
                     for alien in aliens:
                         count = count+1
                         alienx = alien.x
-                        # print(f'count = {count} aliens.x = {alienx}')   
                         gf.update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets)
-                    # print (f'ai_settings.fleet_direction = {ai_settings.fleet_direction}')
                     
                     if ai_settings.updated_this_iteration ==False:
                         aliens.update()
                         
-                        # print(f'count = {count} aliens.x = {alienx}')         
-                        
-                        # print(count)
-                    
+                        # print(f'count = {count} aliens.x = {alienx}')
+                                            
                     next_state = aag.get_state(ship, aliens, alien_bullets)  
                     
-                    # get the rewards for the next state
+                    # Get the rewards for the next state
                     reward = aag.get_rewards(len(bullets),initial_lives,stats.ships_left,initial_aliens,len(aliens), bullet_detected)
                     
-                    # update Q-table
+                    # Update Q-table
                     aag.update_q_table(state, action, reward, next_state, alpha, gamma, num_states, q_table)
-                
-                    
-                    
-                    last_update_time = current_time  # Reset the timer
+
+                    # Reset the timer
+                    last_update_time = current_time  
         
             gf.update_screen(
                 ai_settings, screen, stats, sb, ship, aliens, bullets, play_button, alien_bullets

@@ -1,12 +1,12 @@
 import pygame
 from pygame.sprite import Sprite
 
-
+"""A class to represent a single alien in the fleet."""
 class Alien(Sprite):
-    """A class to represent a single alien in the fleet."""
+    
 
+    """Initialize the alien, and set its starting position."""
     def __init__(self, ai_settings, screen):
-        """Initialize the alien, and set its starting position."""
         super(Alien, self).__init__()
         self.screen = screen
         self.ai_settings = ai_settings
@@ -32,33 +32,20 @@ class Alien(Sprite):
         
         self.direction_change_count = 0  # Counts how many times the direction has changed
 
+    """Return True if alien is at edge of screen."""
     def check_edges(self):
-        """Return True if alien is at edge of screen."""
+        
         screen_rect = self.screen.get_rect()
         if self.rect.right >= screen_rect.right:
             return True
         elif self.rect.left <= 0:
             return True
 
-
-    # def update(self):
-    #     """Move the alien right or left."""
-    #     self.x += 3 * self.ai_settings.fleet_direction
-    #     self.rect.x = self.x  
-
-    def update(self):
-        """Move the alien right or left."""
-        
+    """Move the alien right or left."""
+    def update(self): 
         self.x += self.ai_settings.grid_size * self.ai_settings.fleet_direction
         self.rect.x = self.x  
         self.ai_settings.updated_this_iteration =True
-        # self.x += self.ai_settings.grid_size/(self.ai_settings.num_alien_x * self.ai_settings.num_alien_y) * self.ai_settings.fleet_direction
-        # self.rect.x = self.x  
-       
-        # self.x += self.ai_settings.grid_size/(self.ai_settings.num_alien_x * self.ai_settings.num_alien_y) * self.ai_settings.fleet_direction
-             
-        
-        # self.ai_settings.count=self.ai_settings.count+1
         # print(f'self.x = {self.x}')
         # print(f'self.rect.x = {self.rect.x}')
         
@@ -67,6 +54,6 @@ class Alien(Sprite):
         # print(f'self.ai_settings.grid_size = {self.ai_settings.grid_size}')
         # print(f'self.ai_settings.count={self.ai_settings.count}')
 
+    """Draw the alien at its current location."""
     def blitme(self):
-        """Draw the alien at its current location."""
         self.screen.blit(self.image, self.rect)
