@@ -12,8 +12,9 @@ import ai_agent as aag
 
 class Game():
 
-    def __init__(self):
-        pass
+    def __init__(self, show_scoreboard = False, debug = False):
+        self.show_scoreboard = show_scoreboard
+        self.debug = debug
     
     """Initialize game variables and the main loop."""
     def run_game(self):
@@ -31,7 +32,11 @@ class Game():
 
         # Create an instance to store game statistics, and a scoreboard.
         stats = GameStats(ai_settings)
-        sb = Scoreboard(ai_settings, screen, stats)
+
+        if self.show_scoreboard:
+            sb = Scoreboard(ai_settings, screen, stats)
+        else:
+            sb = None
 
         # Set the background color.
         bg_color = (230, 230, 230)

@@ -72,10 +72,11 @@ def check_play_button(
         stats.game_active = True
 
         # Reset the scoreboard images.
-        sb.prep_score()
-        sb.prep_high_score()
-        sb.prep_level()
-        sb.prep_ships()
+        if sb != None:
+            sb.prep_score()
+            sb.prep_high_score()
+            sb.prep_level()
+            sb.prep_ships()
 
         # Empty the list of aliens and bullets.
         aliens.empty()
@@ -118,7 +119,8 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets, play_bu
     aliens.draw(screen)
 
     # Draw the score information.
-    sb.show_score()
+    if sb != None:
+        sb.show_score()
 
     # Draw the play button if the game is inactive.
     if not stats.game_active:
@@ -155,7 +157,8 @@ def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_
 def check_high_score(stats, sb):
     if stats.score > stats.high_score:
         stats.high_score = stats.score
-        sb.prep_high_score()
+        if sb != None:
+            sb.prep_high_score()
 
 
 """Respond to bullet-alien collisions."""
@@ -166,7 +169,8 @@ def check_ship_bullet_alien_collisions(ai_settings, screen, stats, sb, ship, ali
     if collisions:
         for aliens in collisions.values():
             stats.score += ai_settings.alien_points * len(aliens)
-            sb.prep_score()
+            if sb != None:
+                sb.prep_score()
         check_high_score(stats, sb)
 
     if len(aliens) == 0:
@@ -176,7 +180,8 @@ def check_ship_bullet_alien_collisions(ai_settings, screen, stats, sb, ship, ali
 
         # Increase level.
         stats.level += 1
-        sb.prep_level()
+        if sb != None:
+            sb.prep_level()
 
         create_fleet(ai_settings, screen, ship, aliens)
 
@@ -213,7 +218,8 @@ def ship_hit(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullet
         stats.ships_left -= 1
 
         # Update scoreboard.
-        sb.prep_ships()
+        if sb != None:
+            sb.prep_ships()
 
     else:
         stats.game_active = False
@@ -243,7 +249,6 @@ def check_aliens_bottom(ai_settings, screen, stats, sb, ship, aliens, bullets, a
 """Check if the fleet is at an edge, then update the postions of all aliens in the fleet."""
 def update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets):
     check_fleet_edges(ai_settings, aliens)
-    # aliens.update()
     
     # Look for alien-ship collisions.
     if pygame.sprite.spritecollideany(ship, aliens):
