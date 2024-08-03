@@ -203,8 +203,8 @@ def ship_hit(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullet
     create_fleet(ai_settings, screen, ship, aliens)
     ship.center_ship()
 
-    # # Pause.
-    # sleep(0.5)
+    # Pause.
+    sleep(0.5)
 
 """Check if any aliens have reached the bottom of the screen."""
 def check_aliens_bottom(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets, activity_manager):

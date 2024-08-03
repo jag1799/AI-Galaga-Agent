@@ -85,7 +85,6 @@ class Game():
             )
             if not stats.game_active:
                 pyautogui.click()
-                print("Clicked!")
             current_time = pygame.time.get_ticks()
             time_since_last_update = current_time - last_update_time
             

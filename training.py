@@ -30,6 +30,7 @@ class ActivityManager():
                 epoch_list.append(pair[0])
                 score_list.append(pair[1])
             plt.plot(epoch_list, score_list)
+            plt.xticks(np.arange(min(epoch_list), max(epoch_list)+1, 1.0))
             plt.show()
         else:
             print("No data to show!")
