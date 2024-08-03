@@ -76,7 +76,7 @@ def get_state(ship : Ship,aliens,alien_bullets):
     return state
 
 """Execute the agent selected action per the game rules."""
-def perform_action(action, ai_settings, ship, screen, bullets, stats, sb,alien_bullets,aliens):
+def perform_action(action, ai_settings, ship, screen, bullets, stats, sb,alien_bullets,aliens, activity_manager):
     if action == 0:  # Fire bullets
         gf.fire_bullet(ai_settings, screen, ship, bullets)
         # gf.update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets)
@@ -93,7 +93,7 @@ def perform_action(action, ai_settings, ship, screen, bullets, stats, sb,alien_b
     elif action == 3:
         pass
     
-    gf.update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets)
+    gf.update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets, activity_manager)
     ship.update()
     return ship.rect.centerx
 
@@ -104,7 +104,7 @@ Initialize the Q-Table at the start of a new Training run.
 """
 def initialize_q_table(num_states,num_actions):
 
-    q_table = np.zeros((num_states,num_actions))
+    q_table = np.random.rand(num_states, num_actions)
 
     return q_table
 

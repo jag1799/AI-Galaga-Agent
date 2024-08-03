@@ -8,13 +8,18 @@ from button import Button
 from ship import Ship
 import game_functions as gf
 import ai_agent as aag
+from training import ActivityManager
 
 
 class Game():
 
-    def __init__(self, show_scoreboard = False, debug = False):
+    def __init__(self, 
+                 show_scoreboard = False, 
+                 debug = False,
+                 activity_manager : ActivityManager = None):
         self.show_scoreboard = show_scoreboard
         self.debug = debug
+        self.activity_manager = activity_manager
     
     """Initialize game variables and the main loop."""
     def run_game(self):
@@ -77,7 +82,7 @@ class Game():
             
             # Reset the environment
             gf.check_events(
-                ai_settings, screen, stats, sb, play_button, ship, aliens, bullets, alien_bullets
+                ai_settings, screen, stats, sb, play_button, ship, aliens, bullets, alien_bullets, self.activity_manager
             )
         
             current_time = pygame.time.get_ticks()
@@ -88,7 +93,7 @@ class Game():
 
                 ship.update()
                 gf.fire_alien_bullets(ai_settings, screen, aliens, alien_bullets)
-                gf.update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets)
+                gf.update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets, self.activity_manager)
 
                 if time_since_last_update >= ai_settings.update_time_ms:  # 1000 milliseconds = 1 second
                     
@@ -105,15 +110,13 @@ class Game():
                     action = aag.choose_action(state,q_table,num_states)
                 
                     # perform the action
-                    aag.perform_action(action, ai_settings, ship, screen, bullets, stats, sb,alien_bullets,aliens)
-                
-                
-                
+                    aag.perform_action(action, ai_settings, ship, screen, bullets, stats, sb,alien_bullets,aliens, self.activity_manager)
+
                     ai_settings.updated_this_iteration =False
                     for alien in aliens:
                         count = count+1
                         alienx = alien.x
-                        gf.update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets)
+                        gf.update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets, self.activity_manager)
                     
                     if ai_settings.updated_this_iteration ==False:
                         aliens.update()

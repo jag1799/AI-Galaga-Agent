@@ -4,28 +4,38 @@ Created Sun Jul 28 10:00:00 2024
 @author: JGERMANN
 """
 
-from alien_invasion import Game
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 
-class Training():
-    """ Training instance controller that oversees the performance 
-        of the agent and the number of epochs elapsed.
-    """
-    def __init__(self):
-        self.epoch_num = 0
-        
-    def start_training(self):
-        epoch = Epoch()
-    def update_training_records(self):
-        self.epoch_num += 1
-
-class Epoch():
-
-    """A single alien invasion training instance within a Training() object"""
-    def __init__(self):
-        pass
+""" 
+    Management class that tracks and displays general performance metrics, save/load existing models, 
+    and run the game in a training mode.
+"""
+class ActivityManager():
     
-    """ Run a single game instance until a failure condition is reached.
-        This condition will always be the agent loses all its lives.
-    """
-    def run_epoch(self):
-        pass
+    """Initializing function."""
+    def __init__(self, show_data = False):
+        
+        self.show_data = show_data
+        self.max_epochs = 10
+        self.num_epochs = 0
+        self.scores = list()
+    
+    def show_performance_data(self):
+        epoch_list = list()
+        score_list = list()
+        if len(self.scores) != 0:
+            for pair in self.scores:
+                epoch_list.append(pair[0])
+                score_list.append(pair[1])
+            plt.plot(epoch_list, score_list)
+            plt.show()
+        else:
+            print("No data to show!")
+    
+    """Store the final score for the current epoch."""
+    def finish_epoch(self, epoch_score):
+        self.scores.append(np.array([self.num_epochs, epoch_score]))
+        self.num_epochs += 1
+        
