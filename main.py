@@ -8,7 +8,7 @@ AUTHOR: JGERMANN
 from training import ActivityManager
 from alien_invasion import Game
 
-show_scoreboard = True
+show_scoreboard = False
 debug = False
 training = True
 
@@ -26,7 +26,6 @@ def main():
         game = Game(show_scoreboard, debug)
 
     game.run_game()
-    print("Here")
 
 if __name__ == '__main__':
     main()

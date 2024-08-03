@@ -18,7 +18,7 @@ class ActivityManager():
     def __init__(self, show_data = False):
         
         self.show_data = show_data
-        self.max_epochs = 10
+        self.max_epochs = 5
         self.num_epochs = 0
         self.scores = list()
     

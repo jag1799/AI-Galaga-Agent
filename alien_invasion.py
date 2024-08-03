@@ -1,3 +1,5 @@
+import pyautogui
+
 import pygame
 from pygame.sprite import Group
 
@@ -31,9 +33,6 @@ class Game():
             (ai_settings.screen_width, ai_settings.screen_height)
         )
         pygame.display.set_caption("Alien Invasion")
-
-        # Make the Play button.
-        play_button = Button(ai_settings, screen, "Play")
 
         # Create an instance to store game statistics, and a scoreboard.
         stats = GameStats(ai_settings)
@@ -78,13 +77,15 @@ class Game():
         initial_aliens = 8
 
         # Start the main loop for the game.
-        while initial_lives > 0:
+        while True:
             
             # Reset the environment
             gf.check_events(
-                ai_settings, screen, stats, sb, play_button, ship, aliens, bullets, alien_bullets, self.activity_manager
+                ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets, self.activity_manager
             )
-        
+            if not stats.game_active:
+                pyautogui.click()
+                print("Clicked!")
             current_time = pygame.time.get_ticks()
             time_since_last_update = current_time - last_update_time
             
@@ -135,5 +136,5 @@ class Game():
                     last_update_time = current_time  
         
             gf.update_screen(
-                ai_settings, screen, stats, sb, ship, aliens, bullets, play_button, alien_bullets
+                ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets
             )
