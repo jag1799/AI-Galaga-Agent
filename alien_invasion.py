@@ -1,4 +1,5 @@
 import pyautogui
+import sys
 
 import pygame
 from pygame.sprite import Group
@@ -67,17 +68,13 @@ class Game():
         # Initialize Q-learning parameters 
         alpha = 0.1
         gamma = 0.99
-        # epsilon = 0.1 # exploration rate if greedy function is used.
-        
-        # Number of training instances completed
-        num_epochs = 0 
 
         # Reward initialization 
         initial_lives = ai_settings.ship_limit
         initial_aliens = 8
 
         # Start the main loop for the game.
-        while True:
+        while self.activity_manager.num_epochs < self.activity_manager.max_epochs:
             
             # Reset the environment
             gf.check_events(
@@ -120,8 +117,6 @@ class Game():
                     
                     if ai_settings.updated_this_iteration ==False:
                         aliens.update()
-                        
-                        # print(f'count = {count} aliens.x = {alienx}')
                                             
                     next_state = aag.get_state(ship, aliens, alien_bullets)  
                     
@@ -137,3 +132,9 @@ class Game():
             gf.update_screen(
                 ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets
             )
+        
+        if self.activity_manager.save_data:
+            self.activity_manager.save_performance_data()
+        
+        pygame.quit()
+        sys.exit()

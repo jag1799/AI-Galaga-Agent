@@ -1,2 +1,4 @@
 *file.txt
+*.csv
+*.png
 __pycache__

@@ -15,25 +15,20 @@ import matplotlib.pyplot as plt
 class ActivityManager():
     
     """Initializing function."""
-    def __init__(self, show_data = False):
+    def __init__(self, save_data = False):
         
-        self.show_data = show_data
-        self.max_epochs = 5
+        self.save_data = save_data
+        self.max_epochs = 3
         self.num_epochs = 0
         self.scores = list()
     
-    def show_performance_data(self):
-        epoch_list = list()
-        score_list = list()
-        if len(self.scores) != 0:
-            for pair in self.scores:
-                epoch_list.append(pair[0])
-                score_list.append(pair[1])
-            plt.plot(epoch_list, score_list)
-            plt.xticks(np.arange(min(epoch_list), max(epoch_list)+1, 1.0))
-            plt.show()
+    """Store the epoch-score performance data in a csv file for later usage."""
+    def save_performance_data(self):
+        if len(self.scores) > 0:
+            df = pd.DataFrame(self.scores, columns=['Epoch', 'Score'])
+            df.to_csv("~/Documents/vscode_ws/GalagaAI/performance.csv", index=False)
         else:
-            print("No data to show!")
+            print("No data to write!")
     
     """Store the final score for the current epoch."""
     def finish_epoch(self, epoch_score):

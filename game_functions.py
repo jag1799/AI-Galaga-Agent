@@ -31,8 +31,8 @@ def check_keyup_events(event, ship):
 def check_events(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets, activity_manager):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            if activity_manager.show_data:
-                activity_manager.show_performance_data()
+            if activity_manager.save_data:
+                activity_manager.save_performance_data()
                 
             pygame.quit()
             sys.exit()
@@ -42,6 +42,7 @@ def check_events(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bu
             check_keyup_events(event, ship)
         set_game(ai_settings, aliens, alien_bullets, bullets, sb, screen, ship, stats)
 
+"""Reset the game at every epoch starting at initialization."""
 def set_game(ai_settings, aliens, alien_bullets, bullets, sb, screen, ship, stats):
     if not stats.game_active:
         
