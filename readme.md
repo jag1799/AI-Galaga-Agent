@@ -8,6 +8,14 @@ Galaga is a non-turn-based video game that consists of a single player agent and
 
 
 ## Design Diagrams
+
+### Context
 Below is a high level overview of the system architecture.  The evaluator is a person that continously evaluates the agent's performance from a visual perspective through a viewer.  Internally, the Viewer retains performance data as the agent plays its game and outputs it to the evaluator.  The state of the environment is continously recorded and simultaneously outputted to the agent.
 
-![alt text](/docs/Context.jpg)
+![alt text](/docs/Context.png)
+
+
+### Container
+The below diagram further breaks down the interactions between the self contained items within the Alien Invasion application.  Both the agent and training controller can exist individually without an Alien Invasion game, but rely on data from the environment to be useful.  Both the controller and agent are further described in later sections.
+
+![alt text](/docs/Container.png)
