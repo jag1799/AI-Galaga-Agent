@@ -20,7 +20,8 @@ class Settings:
         self.bullet_color = 200, 60, 60
         # Alien bullet color.
         self.alien_bullet_color = 160, 220, 150
-        self.bullets_allowed = 3
+        self.ship_bullets_allowed = 3 # Maximum number of ship bullets allowed at a time
+        self.alien_bullets_allowed = 1 # Maximum number of alien bullets allowed at a time
         
         self.direction_change_interval = 1000  # Interval in milliseconds
         self.steps_to_move_right = 5
@@ -34,15 +35,15 @@ class Settings:
         self.fleet_drop_speed = 100
 
         # How quickly the game speeds up.
-        self.speedup_scale = 1.1
+        self.speedup_scale = 1.2
         # How quickly the alien point values increase.
         self.score_scale = 1.5
         
         # Sets speed of frame updates / gameplay speed
-        self.update_time_ms = 100
+        self.update_time_ms = 10
         
         # Flag for if the update occured during the current iteration
-        self.updated_this_iteration =False
+        self.updated_this_iteration = False
         
         # Testing Code 
         self.count = 0

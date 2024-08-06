@@ -7,6 +7,8 @@ from bullet import Bullet
 from alien import Alien
 from alien_bullet import Alien_Bullet
 
+from ai_agent import save_q_table_as_csv, load_q_table
+
 """Respond to keypresses."""
 def check_keydown_events(event, ai_settings, screen, ship, bullets):
     if event.key == pygame.K_RIGHT:
@@ -28,12 +30,18 @@ def check_keyup_events(event, ship):
 
 
 """Respond to keypresses and mouse events."""
-def check_events(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets, activity_manager):
+def check_events(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets, activity_manager, save_q_table, q_table):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             if activity_manager.save_data:
                 activity_manager.save_performance_data()
-                
+            
+            if activity_manager.show_data:
+                activity_manager.show_performance_data()
+            
+            if save_q_table:
+                save_q_table_as_csv(q_table)
+
             pygame.quit()
             sys.exit()
         elif event.type == pygame.KEYDOWN:
@@ -65,20 +73,20 @@ def set_game(ai_settings, aliens, alien_bullets, bullets, sb, screen, ship, stat
 """Fire a bullet, if limit not reached yet."""
 def fire_bullet(ai_settings, screen, ship, bullets):
     # Create a new bullet, add to bullets group.
-    if len(bullets) < ai_settings.bullets_allowed:
+    if len(bullets) < ai_settings.ship_bullets_allowed:
         new_bullet = Bullet(ai_settings, screen, ship)
         bullets.add(new_bullet)
 
 
 """Fire a bullet from a random alien, if limit not yet reached."""
 def fire_alien_bullets(ai_settings, screen, aliens, alien_bullets):
-    if len(alien_bullets) < ai_settings.bullets_allowed:
+    if len(alien_bullets) < ai_settings.alien_bullets_allowed:
         new_alien_bullet = Alien_Bullet(ai_settings, screen, aliens)
         alien_bullets.add(new_alien_bullet)
 
 
 """Update images on the screen, and flip to the new screen."""
-def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets):
+def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets, render_game):
     # Redraw the screen, each pass through the loop.
     screen.fill(ai_settings.bg_color)
 
@@ -96,8 +104,9 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_b
     if sb != None:
         sb.show_score()
 
-    # Make the most recently drawn screen visible.
-    pygame.display.flip()
+    if render_game:
+        # Make the most recently drawn screen visible.
+        pygame.display.flip()
 
 
 """Update position of bullets, and get rid of old bullets."""
