@@ -30,27 +30,24 @@ def check_keyup_events(event, ship):
 
 
 """Respond to keypresses and mouse events."""
-def check_events(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets, activity_manager, save_q_table, q_table):
+def check_events(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullets, activity_manager,save_q_table,q_table,train_reward, event_count):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            if activity_manager.save_data:
-                activity_manager.save_performance_data()
-            
             if activity_manager.show_data:
                 activity_manager.show_performance_data()
+                activity_manager.show_training_reward_data()
             
             if save_q_table:
                 save_q_table_as_csv(q_table)
-
             pygame.quit()
             sys.exit()
         elif event.type == pygame.KEYDOWN:
             check_keydown_events(event, ai_settings, screen, ship, bullets)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, ship)
+        
         set_game(ai_settings, aliens, alien_bullets, bullets, sb, screen, ship, stats)
 
-"""Reset the game at every epoch starting at initialization."""
 def set_game(ai_settings, aliens, alien_bullets, bullets, sb, screen, ship, stats):
     if not stats.game_active:
         
@@ -73,14 +70,14 @@ def set_game(ai_settings, aliens, alien_bullets, bullets, sb, screen, ship, stat
 """Fire a bullet, if limit not reached yet."""
 def fire_bullet(ai_settings, screen, ship, bullets):
     # Create a new bullet, add to bullets group.
-    if len(bullets) < ai_settings.ship_bullets_allowed:
+    if len(bullets) < ai_settings.bullets_allowed:
         new_bullet = Bullet(ai_settings, screen, ship)
         bullets.add(new_bullet)
 
 
 """Fire a bullet from a random alien, if limit not yet reached."""
 def fire_alien_bullets(ai_settings, screen, aliens, alien_bullets):
-    if len(alien_bullets) < ai_settings.alien_bullets_allowed:
+    if len(alien_bullets) < ai_settings.bullets_allowed_aliens:
         new_alien_bullet = Alien_Bullet(ai_settings, screen, aliens)
         alien_bullets.add(new_alien_bullet)
 
@@ -200,7 +197,8 @@ def ship_hit(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullet
             sb.prep_ships()
 
     else:
-        activity_manager.finish_epoch(stats.score)
+        activity_manager.finish_epoch(stats.score, ai_settings)
+        ai_settings.epoch_count = ai_settings.epoch_count+1
         stats.game_active = False
         pygame.mouse.set_visible(True)
 
