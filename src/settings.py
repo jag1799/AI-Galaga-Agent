@@ -1,7 +1,7 @@
-import sys
 import pygame
 
 class Settings:
+
 
     """Initialize the game's static settings."""
     def __init__(self,training):
@@ -54,6 +54,7 @@ class Settings:
         
         self.initialize_dynamic_settings()
 
+
     """Initialize settings that change throughout the game."""
     def initialize_dynamic_settings(self):
         self.ship_speed_factor = 1
@@ -86,6 +87,7 @@ class Settings:
 
         # fleet_direction of 1 represents right, -1 represents left.
         self.fleet_direction = 1
+
 
     """Increase speed settings and alien point values."""
     def increase_speed(self):

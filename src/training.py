@@ -84,8 +84,7 @@ class ActivityManager():
         plt.legend()
         plt.show()
 
-
-    
+    """Display the performance data of actual scores vs. epochs."""
     def show_performance_data(self):
         epoch_list = list()
         score_list = list()
@@ -126,7 +125,6 @@ class ActivityManager():
                 
                 # Plot the regression line
                 plt.plot(epoch_list, regression_line, color='red', label='Regression Line')
-                
                 
                 # Determine tick interval
                 if range_span > 0:

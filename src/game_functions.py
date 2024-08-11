@@ -198,7 +198,7 @@ def ship_hit(ai_settings, screen, stats, sb, ship, aliens, bullets, alien_bullet
 
     else:
         activity_manager.finish_epoch(stats.score, ai_settings)
-        ai_settings.epoch_count = ai_settings.epoch_count+1
+        ai_settings.epoch_count = ai_settings.epoch_count + 1
         stats.game_active = False
         pygame.mouse.set_visible(True)
 
@@ -241,9 +241,10 @@ def get_number_aliens_x(ai_settings, alien_width):
     number_aliens_x = int(available_space_x / (2 * alien_width))
     return number_aliens_x
 
+
 """Determine the number of rows of aliens that fit on the screen."""
 def get_number_rows(ai_settings, ship_height, alien_height):
-    available_space_y = ai_settings.screen_height - (1* alien_height) - ship_height
+    available_space_y = ai_settings.screen_height - (1 * alien_height) - ship_height
     number_rows = int(available_space_y/2 / (2 * alien_height))
     return number_rows
 
@@ -266,8 +267,8 @@ def create_fleet(ai_settings, screen, ship, aliens):
     number_rows = get_number_rows(ai_settings, ship.rect.height, alien.rect.height)
     
     # storing the number of aliens for iteration updates
-    ai_settings.num_alien_x= number_aliens_x
-    ai_settings.num_alien_y= number_rows
+    ai_settings.num_alien_x = number_aliens_x
+    ai_settings.num_alien_y = number_rows
 
     # Create the fleet of aliens.
     for row_number in range(number_rows):

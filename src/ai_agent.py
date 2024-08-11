@@ -18,6 +18,7 @@ import game_functions as gf
 
 import numpy as np
 
+
 """Determine the current state status."""
 def get_state(ship : Ship, aliens, alien_bullets):
 
@@ -33,8 +34,7 @@ def get_state(ship : Ship, aliens, alien_bullets):
         max_bullet = max(alien_bullets.sprites(), key=lambda bullet: bullet.rect.y)
         alien_bullet_min_x = max_bullet.rect.x // 100
     
-        
-    rel_ship_pos_x =None
+    rel_ship_pos_x = None
     
     if alien_bullet_min_x != None :
         # Ship position relative to alien_bullets
@@ -45,7 +45,7 @@ def get_state(ship : Ship, aliens, alien_bullets):
     return state
 
 
-
+"""Execute the action the agent chose for the current state."""
 def perform_action(action, ai_settings, ship, screen, bullets, stats, sb, alien_bullets, aliens, activity_manager):
         
     ship.moving_left = False
@@ -69,6 +69,7 @@ def perform_action(action, ai_settings, ship, screen, bullets, stats, sb, alien_
 
     return ship.rect.centerx
 
+"""Execute the action chosen by the agent specifically in training mode."""
 def perform_action_training_mode(action, ai_settings, ship, screen, bullets, stats, sb, alien_bullets, aliens, activity_manager):
         
     ship.moving_left = False
@@ -85,6 +86,7 @@ def perform_action_training_mode(action, ai_settings, ship, screen, bullets, sta
     ship.update()
 
     return ship.rect.centerx
+
 
 """
 Initialize the Q-Table at the start of a new Training run.
@@ -157,6 +159,8 @@ def choose_action(state,q_table,epsilon):
     
     return action_choice
 
+
+"""Get the rewards received during training."""
 def get_train_rewards(next_state, ship, action):
     ship_center = (ship.center - 50) // 100  # x-position 0 to 9
     reward = 0
@@ -189,6 +193,8 @@ def get_train_rewards(next_state, ship, action):
 
     return reward
 
+
+"""Get generic rewards received while not training."""
 def get_rewards(next_state,ship, action):
     
     ship_center = (ship.center - 50) // 100  # x-position 0 to 9
@@ -239,9 +245,13 @@ def update_q_table(current_index, action, reward, next_state, alpha, gamma, num_
     
     return q_table
 
+
+"""Save the current Q-Table configuration as a CSV file."""
 def save_q_table_as_csv(q_table):
     np.savetxt("q_table.csv",q_table,delimiter=",")
-    
+
+
+"""Load the specified CSV file into a numpy array representing the Q-Table."""
 def load_q_table(filename="q_tableAgent Learned.csv"):
     return np.loadtxt(filename, delimiter=",")
 

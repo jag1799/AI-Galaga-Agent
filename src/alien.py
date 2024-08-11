@@ -32,6 +32,7 @@ class Alien(Sprite):
         
         self.direction_change_count = 0  # Counts how many times the direction has changed
 
+
     """Return True if alien is at edge of screen."""
     def check_edges(self):
         
@@ -41,18 +42,13 @@ class Alien(Sprite):
         elif self.rect.left <= 0:
             return True
 
+
     """Move the alien right or left."""
     def update(self): 
         self.x += self.ai_settings.grid_size * self.ai_settings.fleet_direction
         self.rect.x = self.x  
         self.ai_settings.updated_this_iteration =True
-        # print(f'self.x = {self.x}')
-        # print(f'self.rect.x = {self.rect.x}')
-        
-        # print(f'self.ai_settings.fleet_direction = {self.ai_settings.fleet_direction}')
-        
-        # print(f'self.ai_settings.grid_size = {self.ai_settings.grid_size}')
-        # print(f'self.ai_settings.count={self.ai_settings.count}')
+
 
     """Draw the alien at its current location."""
     def blitme(self):

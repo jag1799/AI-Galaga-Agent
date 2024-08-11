@@ -31,6 +31,7 @@ class Game():
         self.index_log = index_log
         self.training = training
     
+
     """Initialize game variables and the main loop."""
     def run_game(self):
         # Initialize pygame, settings, and screen object.
@@ -161,12 +162,10 @@ class Game():
                     # Reset the timer
                     last_update_time = current_time
                     
-                    
                     # epsilon decay 
                     if epsilon > 0.00:
                         epsilon = epsilon * epsilon_decay_rate
 
-                    
                     ai_settings.train_reward += train_reward_this_iteration
                     ai_settings.event_count += 1
                     self.index_log.append(current_index)
